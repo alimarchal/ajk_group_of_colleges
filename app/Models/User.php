@@ -25,6 +25,7 @@ class User extends Authenticatable
 
     // The User model requires this trait
     use HasRoles;
+
     protected $guard_name = 'web';
 
     /**
@@ -33,7 +34,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'username'
     ];
 
     /**
