@@ -22,6 +22,15 @@ return new class extends Migration
             $table->boolean('status')->default(1);
             $table->timestamps();
         });
+
+
+        DB::transaction(function () {
+            $query = "
+                    INSERT INTO `branches` (`name`, `acronym`, `phone`, `email`, `city`, `address`, `status`, `created_at`, `updated_at`) VALUES
+                    ('AJK GC Muzaffarabad Branch', 'AJKGCMC', '03008169924', 'alirazamarchal@hotmail.com', 'Muzaffarabad', 'Khawaja Mollah Ward # 16, Muzaffarabad, Azad Jammu & Kashmir', '1', '2023-03-02 03:35:01', '2023-03-02 03:35:01');
+                ";
+            DB::statement($query);
+        });
     }
 
     /**

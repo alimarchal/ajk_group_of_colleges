@@ -55,6 +55,7 @@ class PermissionsDemoSeeder extends Seeder
         Role::create(['name' => 'parent']);
         Role::create(['name' => 'teacher']);
         Role::create(['name' => 'receptionist']);
+        Role::create(['name' => 'student']);
 
     }
 }
