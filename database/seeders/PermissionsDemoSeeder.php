@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
+use Illuminate\Support\Facades\Hash;
 
 class PermissionsDemoSeeder extends Seeder
 {
@@ -38,7 +39,7 @@ class PermissionsDemoSeeder extends Seeder
             'name' => 'Ali Raza Marchal',
             'username' => 'Super-Admin',
             'email' => 'kh.marchal@gmail.com',
-            'password' => \Hash::make('123456')
+            'password' => Hash::make('123456')
         ]);
         $user->assignRole($role3);
 
@@ -47,7 +48,7 @@ class PermissionsDemoSeeder extends Seeder
             'name' => 'Example Admin User',
             'username' => 'admin',
             'email' => 'admin@ajkgc.com',
-            'password' => \Hash::make('123456')
+            'password' => Hash::make('123456')
         ]);
         $user->assignRole($role2);
 

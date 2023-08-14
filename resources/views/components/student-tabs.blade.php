@@ -1,0 +1,10 @@
+<div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700 print:hidden">
+    <ul class="flex flex-wrap -mb-px">
+        <li class="mr-2"> <a href="{{ route('student.show', $student->id) }}" class="inline-block p-4 border-b-2 rounded-t-lg @if(request()->routeIs('student.show')) text-blue-600 border-blue-600 @else  border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 @endif" >Student Profile</a> </li>
+        <li class="mr-2"> <a href="{{ route('student.guardians', $student->id) }}" class="inline-block p-4 border-b-2 rounded-t-lg @if(request()->routeIs('student.guardians')) text-blue-600 border-blue-600 @else  border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 @endif" >Guardian</a> </li>
+        <li class="mr-2"> <a href="{{ route('student.guardians.alerts', $student->id) }}" class="inline-block p-4 border-b-2 rounded-t-lg @if(request()->routeIs('student.guardians.alerts')) text-blue-600 border-blue-600 @else  border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 @endif" >Emergency Contacts</a> </li>
+        <li class="mr-2"> <a href="{{ route('student.instituteMigrationStudent.alerts', $student->id) }}" class="inline-block p-4 border-b-2 rounded-t-lg @if(request()->routeIs('student.instituteMigrationStudent.alerts')) text-blue-600 border-blue-600 @else  border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 @endif" >Migration</a> </li>
+        <li class="mr-2"> <a href="{{ route('student.print', $student->id) }}" class="inline-block p-4 border-b-2 rounded-t-lg @if(request()->routeIs('student.print')) text-blue-600 border-blue-600 @else  border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 @endif" >Print / Show</a> </li>
+{{--        <li> <a class="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500">Disabled</a> </li>--}}
+    </ul>
+</div>
