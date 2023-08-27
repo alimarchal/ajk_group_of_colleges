@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -22,10 +21,13 @@ return new class extends Migration
              */
             $table->id();
             $table->foreignId('fee_category_id')->nullable()->constrained();
+            $table->foreignId('institute_class_id')->nullable()->constrained();
+            $table->foreignId('section_id')->nullable()->constrained();
             $table->text('description')->nullable();
             $table->decimal('amount', 10, 2);
             $table->boolean('is_recurring')->default(false);
-            $table->string('frequency')->nullable();
+            $table->enum('frequency', ["Monthly", "Quarterly", "Annually","One Time"])->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

@@ -5,13 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Student extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'admission_no',
         'roll_no',
         'institute_class_id',
@@ -33,8 +37,34 @@ class Student extends Model
         'measure_date',
         'fees_discount',
         'medical_history',
+        'is_migrated',
         'student_pic',
     ];
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function challans(): HasMany
+    {
+        return $this->hasMany(Challan::class);
+    }
+
+    public function scopeAgeBetween(Builder $query, $minAge, $maxAge)
+    {
+        // Assuming your 'dob' field is the date of birth
+        return $query->whereBetween('dob', [
+            now()->subYears($maxAge),
+            now()->subYears($minAge)->endOfDay()
+        ]);
+    }
+
+
+    public function latestStatus(): HasOne
+    {
+        return $this->hasOne(Status::class)->latestOfMany();
+    }
 
 
     public function guardian(): HasOne
@@ -71,5 +101,10 @@ class Student extends Model
     public function instituteMigratedStudent()
     {
         return $this->hasOne(InstituteMigration::class, 'student_id');
+    }
+
+    public function fee_type_carts(): HasMany
+    {
+        return $this->hasMany(FeeTypeCart::class);
     }
 }

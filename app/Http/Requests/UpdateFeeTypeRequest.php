@@ -11,7 +11,7 @@ class UpdateFeeTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,10 @@ class UpdateFeeTypeRequest extends FormRequest
     {
         return [
             //
+            'amount' => 'required',
+            'is_recurring' => 'required',
+            'frequency' => 'required',
+            'status' => 'required',
         ];
     }
 }

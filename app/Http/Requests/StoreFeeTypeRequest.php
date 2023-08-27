@@ -11,7 +11,7 @@ class StoreFeeTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,13 @@ class StoreFeeTypeRequest extends FormRequest
     {
         return [
             //
+            'fee_category_id' => 'required',
+            'institute_class_id' => 'required',
+            'section_id' => 'required',
+            'amount' => 'required',
+            'is_recurring' => 'required',
+            'frequency' => 'required',
+            'status' => 'required',
         ];
     }
 }

@@ -22,14 +22,14 @@ class StoreStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'admission_no' => 'required|unique:students',
-            'roll_no' => 'required|unique:students',
+//            'admission_no' => 'required|unique:students',
+            'roll_no' => 'required',
             'institute_class_id' => 'nullable|exists:institute_classes,id',
             'section_id' => 'nullable|exists:sections,id',
             'category_id' => 'nullable|exists:categories,id',
             'firstname' => 'required',
             'lastname' => 'required',
-            'gender' => 'required|in:male,female,other',
+            'gender' => 'required|in:Male,Female,Other',
             'dob' => 'required|date',
             'religion' => 'nullable',
             'cast' => 'nullable',

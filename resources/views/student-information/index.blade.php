@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Student Information') }}
         </h2>
     </x-slot>
 
@@ -13,14 +13,14 @@
                             <div class="grid grid-cols-3 gap-1">
                                 <div class="col-span-2">
                                     <div class="text-3xl font-bold leading-8">
-                                        00
+                                        {{ $approved_students }}
                                     </div>
                                     <div class="mt-1 text-base font-extrabold text-black">
-                                        Student Details
+                                        Students Details
                                     </div>
                                 </div>
                                 <div class="col-span-1 flex items-center justify-end">
-                                    <img src="https://img.icons8.com/?size=128&id=12780&format=png" alt="employees on leave" class="h-12 w-12">
+                                    <img src="https://img.icons8.com/?size=128&id=43215&format=png" alt="employees on leave" class="h-12 w-12">
                                 </div>
                             </div>
                         </div>
@@ -30,14 +30,14 @@
                             <div class="grid grid-cols-3 gap-1">
                                 <div class="col-span-2">
                                     <div class="text-3xl font-bold leading-8">
-                                        00
+                                        &nbsp;
                                     </div>
                                     <div class="mt-1 text-base font-extrabold text-black">
                                         Student Admission
                                     </div>
                                 </div>
                                 <div class="col-span-1 flex items-center justify-end">
-                                    <img src="https://img.icons8.com/?size=128&id=DEiiONGr4Fjl&format=png" alt="employees on leave" class="h-12 w-12">
+                                    <img src="https://img.icons8.com/?size=128&id=QanbId3SGVR7&format=png" alt="employees on leave" class="h-12 w-12">
                                 </div>
                             </div>
                         </div>

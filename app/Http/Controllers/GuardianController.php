@@ -50,8 +50,8 @@ class GuardianController extends Controller
         }
 
         $guardian = Guardian::create($request->all());
-        session()->flash('Student record created successfully.');
-        return to_route('student.guardians',$student->id);
+        session()->flash('success', 'Guardian record updated successfully.');
+        return to_route('student.guardians.alerts',$student->id);
     }
 
     /**
@@ -94,6 +94,7 @@ class GuardianController extends Controller
 
         $student->guardian->update($request->all());
         // Create a new student record
+        session()->flash('success', 'Guardian record updated successfully.');
         return to_route('student.guardians', $student->id)->with('success', 'Guardians record updated successfully.');
     }
 

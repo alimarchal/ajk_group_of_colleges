@@ -19,7 +19,7 @@
                         <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
                             <div>
                                 <x-label for="admission_no" value="{{ __('Admission No') }}"/>
-                                <x-input id="admission_no" class="block mt-1 w-full" type="text" name="admission_no" :value="old('admission_no', $student->admission_no)"/>
+                                <x-input id="admission_no" class="block mt-1 w-full" type="text" name="admission_no" readonly :value="old('admission_no', $student->admission_no)"/>
                             </div>
                             <div>
                                 <x-label for="roll_no" value="{{ __('Roll No') }}"/>
@@ -70,9 +70,9 @@
                                 <x-label for="gender" value="{{ __('Gender') }}"/>
                                 <select name="gender" id="gender" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
                                     <option value="">Select a gender</option>
-                                    <option value="male" {{ old('gender', $student->gender) === 'male' ? 'selected' : '' }}>Male</option>
-                                    <option value="female" {{ old('gender', $student->gender) === 'female' ? 'selected' : '' }}>Female</option>
-                                    <option value="other" {{ old('gender', $student->gender) === 'other' ? 'selected' : '' }}>Other</option>
+                                    <option value="Male" {{ old('gender', $student->gender) === 'Male' ? 'selected' : '' }}>Male</option>
+                                    <option value="Female" {{ old('gender', $student->gender) === 'Female' ? 'selected' : '' }}>Female</option>
+                                    <option value="Other" {{ old('gender', $student->gender) === 'Other' ? 'selected' : '' }}>Other</option>
                                 </select>
                             </div>
                             <div>
@@ -153,7 +153,10 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+
+
+
                             <div>
                                 <x-label for="medical_history" value="{{ __('Medical History') }}"/>
                                 <textarea name="medical_history" id="medical_history" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{$student->medical_history}}</textarea>
@@ -171,6 +174,24 @@
                                         @endif
                                     </div>
                                 @endif
+                            </div>
+                            <div>
+                                <x-label for="is_migrated" value="{{ __('Student Is Migrated From Another Institute') }}" />
+                                <select name="is_migrated" id="is_migrated" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                                    <option value="">Select an option</option>
+                                    <option value="1" {{ old('is_migrated', $student->is_migrated) == '1' ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ old('is_migrated', $student->is_migrated) == '0' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                            <div>
+                                <x-label for="status" value="{{ __('Status') }}" />
+                                <select name="status_name" id="status" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                                    <option value="">Select a student status</option>
+                                    <option value="In-Process" {{ old('status_name', $student->latestStatus->name) == 'In-Process' ? 'selected' : '' }} >In-Process</option>
+                                    <option value="Approved" {{ old('status_name', $student->latestStatus->name) == 'Approved' ? 'selected' : '' }} >Approved</option>
+                                    <option value="Rusticated" {{ old('status_name', $student->latestStatus->name) == 'Rusticated' ? 'selected' : '' }} >Rusticated</option>
+                                    <option value="Leaved" {{ old('status_name', $student->latestStatus->name) == 'Leaved' ? 'selected' : '' }} >Leaved</option>
+                                </select>
                             </div>
                         </div>
                         <div class="flex items-center justify-end mt-4">

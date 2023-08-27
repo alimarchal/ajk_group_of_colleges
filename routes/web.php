@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\ChallanController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeeTypeController;
 use App\Http\Controllers\GuardianController;
 use App\Http\Controllers\InstituteMigrationController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentGurdianAlertContactController;
 use App\Http\Controllers\StudentInformationController;
@@ -24,9 +28,8 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     //
     Route::resource('roles', \App\Http\Controllers\RoleController::class);
     Route::resource('permissions', \App\Http\Controllers\PermissionController::class);
@@ -56,7 +59,19 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::post('instituteMigrationStudent/{student}', [InstituteMigrationController::class, 'store'])->name('student.instituteMigrationStudent.store');
     Route::put('instituteMigrationStudent/{instituteMigratedStudent}', [InstituteMigrationController::class, 'update'])->name('student.instituteMigrationStudent.update');
 
+    Route::get('student/{student}/generate-challan', [ChallanController::class, 'generate'])->name('student.generate-challan');
+    Route::post('student/{student}/generate-challan', [ChallanController::class, 'generate'])->name('student.generate-challan.post');
+    Route::delete('student/{student}/generate-challan/{feeTypeCart}', [ChallanController::class, 'generatedChallanDelete'])->name('student.generate-challan.generatedChallanDelete');
+    Route::post('student/{student}/generateFinalChallan', [ChallanController::class, 'generateFinalChallan'])->name('student.generate-challan.generateFinalChallan');
+    Route::get('student/{student}/fee-challans', [ChallanController::class, 'feeChallans'])->name('student.fee-challans');
+
+
     Route::get('student/{student}/print', [StudentController::class, 'print'])->name('student.print');
+
+    Route::get('/fee-information', [FeeTypeController::class, 'feeInformationIndex'])->name('fee-information.feeInformationIndex');
+    Route::resource('feeType', FeeTypeController::class);
+    Route::get('payment/{challan}', [PaymentController::class, 'show']);
+    Route::resource('payment', PaymentController::class);
 
 
 });

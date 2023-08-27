@@ -1,7 +1,9 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <div style="background-color: white; border-radius: 10px; padding: 10px;">
+                <x-authentication-card-logo />
+            </div>
         </x-slot>
 
         <x-validation-errors class="mb-4" />

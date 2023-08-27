@@ -4,8 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Models\Status;
 use App\Models\Student;
+use Auth;
+use DB;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class StudentController extends Controller
 {
@@ -14,7 +20,50 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return view('students.index');
+
+//        DB::enableQueryLog();
+        $students = QueryBuilder::for(Student::class)
+            ->allowedFilters([
+                AllowedFilter::exact('gender'),
+                AllowedFilter::scope('age_between', 'ageBetween'),
+                AllowedFilter::exact('admission_date'),
+                AllowedFilter::partial('admission_no'),
+                AllowedFilter::partial('roll_no'),
+                AllowedFilter::partial('firstname'),
+                AllowedFilter::partial('lastname'),
+                AllowedFilter::partial('mobile_no'),
+                AllowedFilter::partial('email'),
+                AllowedFilter::exact('bloodGroup.id'),
+                AllowedFilter::exact('instituteClass.id'),
+                AllowedFilter::exact('latestStatus.name'),
+                'guardian.father_name',
+                'guardian.father_phone',
+                'guardian.father_occupation',
+                'guardian.mother_name',
+                'guardian.mother_phone',
+                'guardian.guardian_name',
+                'guardian.guardian_relation',
+                'guardian.guardian_phone',
+                'guardian.guardian_email',
+                'section.id',
+                'category.id',
+                'dob', 'religion', 'cast', 'house', 'height', 'weight', 'measure_date', 'fees_discount',
+            ])
+            ->allowedSorts([
+                'firstname',
+                'lastname',
+                'dob',
+                'admission_date',
+                // Add more sortable fields as needed
+            ])
+            ->defaultSort('firstname')
+            ->with('guardian', 'emergencyContact', 'instituteClass', 'bloodGroup', 'section', 'category', 'instituteMigratedStudent', 'latestStatus')
+            ->paginate(10);
+
+
+//        dd(DB::getQueryLog($students));
+
+        return view('students.index', compact('students'));
     }
 
     /**
@@ -30,14 +79,26 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
+        $user = Auth::user();
+
+        $studentPic = null;
         // Process and store the uploaded images if provided
         if ($request->hasFile('student_pic_1')) {
-            $fatherPicPath = $request->file('student_pic_1')->store('student_pics', 'public');
-            $request->merge(['student_pic' => $fatherPicPath]);
+            $studentPic = $request->file('student_pic_1')->store('student_pics', 'public');
+            $request->merge(['student_pic' => $studentPic]);
         }
+        $request->merge(['user_id' => $user->id]);
 
         // Create a new student record
         $student = Student::create($request->all());
+        $student->admission_no = 'AJKGC-' . $student->id;
+        $student->save();
+
+        $status = Status::create([
+            'user_id' => $user->id,
+            'student_id' => $student->id,
+            'name' => 'In-Process',
+        ]);
 
         session()->flash('success', 'Student record created successfully.');
         return to_route('student.guardians', $student->id);
@@ -49,7 +110,7 @@ class StudentController extends Controller
      */
     public function print(Student $student)
     {
-        return view('student-information-print.student-admision-print',compact('student'));
+        return view('student-information-print.student-admision-print', compact('student'));
     }
 
     /**
@@ -65,6 +126,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
+        $user = Auth::user();
         $request->validate([
             'admission_no' => 'required|unique:students,admission_no,' . $student->id,
             'roll_no' => 'required|unique:students,roll_no,' . $student->id,
@@ -74,7 +136,7 @@ class StudentController extends Controller
             'category_id' => 'nullable|exists:categories,id',
             'firstname' => 'required',
             'lastname' => 'required',
-            'gender' => 'required|in:male,female,other',
+            'gender' => 'required|in:Male,Female,Other',
             'dob' => 'required|date',
             'religion' => 'nullable',
             'cast' => 'nullable',
@@ -87,6 +149,7 @@ class StudentController extends Controller
             'measure_date' => 'nullable|date',
             'fees_discount' => 'nullable|integer',
             'medical_history' => 'nullable',
+            'status_name' => 'required',
         ]);
 
 
@@ -96,6 +159,11 @@ class StudentController extends Controller
             $request->merge(['student_pic' => $fatherPicPath]);
         }
 
+        $status = Status::create([
+            'user_id' => $user->id,
+            'student_id' => $student->id,
+            'name' => $request->status_name,
+        ]);
 
         $student->update($request->all());
         // Create a new student record

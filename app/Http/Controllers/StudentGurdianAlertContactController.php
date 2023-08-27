@@ -32,7 +32,16 @@ class StudentGurdianAlertContactController extends Controller
     {
         $request->merge(['student_id' => $student->id]);
         $studentGurdianAlertContact = StudentGurdianAlertContact::create($request->all());
-        return to_route('student.guardians.alerts',$student->id)->with('success', 'Student gurdian alert record created successfully.');
+
+        if ($student->is_migrated == 1) {
+            session()->flash('success', 'Emergency contact record created successfully.');
+            return to_route('student.instituteMigrationStudent.alerts', $student->id)->with('success', 'Student gurdian alert record created successfully.');
+        } else {
+            session()->flash('success', 'Emergency contact record created successfully.');
+            return to_route('student.print', $student->id)->with('success', 'Student gurdian alert record created successfully.');
+        }
+
+
     }
 
     /**
@@ -40,7 +49,7 @@ class StudentGurdianAlertContactController extends Controller
      */
     public function show(Student $student)
     {
-        return view('student-gurdian-alert-contact.create',compact('student'));
+        return view('student-gurdian-alert-contact.create', compact('student'));
     }
 
     /**

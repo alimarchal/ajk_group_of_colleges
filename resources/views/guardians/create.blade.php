@@ -136,7 +136,7 @@
                                 </div>
                                 <div>
                                     <x-label for="father_pic" value="{{ __('Father Picture') }}" />
-                                    <x-input id="father_pic" class="block mt-1 w-full" type="file" name="father_pic" />
+                                    <x-input id="father_pic" class="block mt-1 w-full" type="file" name="father_pic_1" />
                                 </div>
                                 <!-- Mother Information -->
                                 <div>
@@ -153,7 +153,7 @@
                                 </div>
                                 <div>
                                     <x-label for="mother_pic" value="{{ __('Mother Picture') }}" />
-                                    <x-input id="mother_pic" class="block mt-1 w-full" type="file" name="mother_pic" />
+                                    <x-input id="mother_pic" class="block mt-1 w-full" type="file" name="mother_pic_1" />
                                 </div>
                                 <!-- Guardian Information -->
                                 <div>
@@ -187,7 +187,7 @@
                                 </div>
                                 <div>
                                     <x-label for="guardian_pic" value="{{ __('Guardian Picture') }}" />
-                                    <x-input id="guardian_pic" class="block mt-1 w-full" type="file" name="guardian_pic" />
+                                    <x-input id="guardian_pic" class="block mt-1 w-full" type="file" name="guardian_pic_1" />
                                 </div>
                                 <div>
                                     <x-label for="guardian_address" value="{{ __('Guardian Address') }}" />
@@ -195,7 +195,7 @@
                                 </div>
                             </div>
                             <div class="flex items-center justify-end mt-4">
-                                <x-button class="ml-4" id="submit-btn" onclick="return confirm('Are you sure you want to update guardian information?')">{{ __('Update Guardian') }}</x-button>
+                                <x-button class="ml-4" id="submit-btn" onclick="return confirm('Are you sure you want to create new guardian information?')">{{ __('Add Guardian & Next') }}</x-button>
                             </div>
                         </form>
                     @endif

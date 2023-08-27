@@ -16,13 +16,16 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('student-information.index') }}" :active="request()->routeIs('student-information.*')">
+                    <x-nav-link href="{{ route('student-information.index') }}" :active="request()->routeIs(['student-information.*','student.*'])">
                         {{ __('Student Information') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    <x-nav-link href="{{ route('fee-information.feeInformationIndex') }}" :active="request()->routeIs(['fee-information.*','feeType.*','payment.*'])">
                         {{ __('Fee Collection') }}
                     </x-nav-link>
+
+
+                    @role('Super-Admin')
 
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Reports') }}
@@ -32,7 +35,7 @@
                         {{ __('Settings') }}
                     </x-nav-link>
 
-                    @role('Super-Admin')
+
                     <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
                         {{ __('Users') }}
                     </x-nav-link>

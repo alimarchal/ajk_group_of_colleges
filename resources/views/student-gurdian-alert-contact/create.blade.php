@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                             <div class="flex items-center justify-end mt-4">
-                                <x-button class="ml-4" id="submit-btn" onclick="return confirm('Are you sure you want to update guardian alert contacts?')">{{ __('Update Guardian Alert Contacts') }}</x-button>
+                                <x-button class="ml-4" id="submit-btn" onclick="return confirm('Are you sure you want to create guardian alert contacts?')">{{ __('Update Guardian Alert Contacts & Next') }}</x-button>
                             </div>
                         </form>
 

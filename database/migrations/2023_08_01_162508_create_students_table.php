@@ -11,7 +11,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
+            $table->id()->startingValue(10001);
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->string('admission_no')->nullable();
             $table->string('roll_no')->nullable();
             $table->foreignId('institute_class_id')->nullable()->constrained();
@@ -33,8 +34,9 @@ return new class extends Migration {
             $table->date('measure_date')->nullable();
             $table->integer('fees_discount')->default(0);
             $table->string('medical_history')->nullable();
+            $table->boolean('is_migrated')->default(0);
             $table->string('student_pic')->nullable();
-            $table->enum('status', ['In-Process', 'Approved', 'Rusticated','Leaved'])->default('In-Process');
+//            $table->enum('status', ['In-Process', 'Approved', 'Rusticated','Leaved'])->default('In-Process');
             $table->timestamps();
         });
     }

@@ -18,25 +18,12 @@
                     <!-- resources/views/users/create.blade.php -->
                     <x-validation-errors class="mb-4 mt-4" />
                     <x-status-message class="mb-4" />
-                    <form method="POST" action="{{ route('student.store') }}" enctype="multipart/form-data"> @csrf <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-                            <div>
-                                <x-label for="admission_no" value="{{ __('Admission No') }}" />
-                                <x-input id="admission_no" class="block mt-1 w-full" type="text" name="admission_no" :value="old('admission_no')"   />
-                            </div>
-                            <div>
-                                <x-label for="roll_no" value="{{ __('Roll No') }}" />
-                                <x-input id="roll_no" class="block mt-1 w-full" type="text" name="roll_no" :value="old('roll_no')" required  />
-                            </div>
-                            <div>
-                                <x-label for="institute_class_id" value="{{ __('Institute Class') }}" /> <!-- Add your select input for institute_class_id here --> <select name="institute_class_id" id="institute_class_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
-                                    <option value="">Select a class</option> @foreach (\App\Models\InstituteClass::all() as $ic) <option value="{{ $ic->id }}" {{ old('institute_class_id') == $ic->id ? 'selected' : '' }}>{{ $ic->name }} - {{ $ic->code }}</option> @endforeach
-                                </select>
-                            </div>
-                            <div>
-                                <x-label for="section_id" value="{{ __('Section') }}" /> <!-- Add your select input for section_id here --> <select name="section_id" id="section_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
-                                    <option value="">Select a section</option> @foreach (\App\Models\Section::all() as $section) <option value="{{ $section->id }}" {{ old('section_id') == $section->id ? 'selected' : '' }}>{{ $section->name }}</option> @endforeach
-                                </select>
-                            </div>
+                    <form method="POST" action="{{ route('student.store') }}" enctype="multipart/form-data">
+                        @csrf
+
+                        <livewire:student-class-section />
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
                             <div>
                                 <x-label for="category_id" value="{{ __('Category') }}" /> <!-- Add your select input for category_id here --> <select name="category_id" id="category_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
                                     <option value="">Select a category</option> @foreach (\App\Models\Category::all() as $cat) <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option> @endforeach
@@ -44,18 +31,19 @@
                             </div>
                             <div>
                                 <x-label for="firstname" value="{{ __('First Name') }}" />
-                                <x-input id="firstname" class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname')" required  />
+                                <x-input id="firstname" required class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname')" required  />
                             </div>
                             <div>
                                 <x-label for="lastname" value="{{ __('Last Name') }}" />
-                                <x-input id="lastname" class="block mt-1 w-full" type="text" name="lastname" :value="old('lastname')" required  />
+                                <x-input id="lastname" required class="block mt-1 w-full" type="text" name="lastname" :value="old('lastname')" required  />
                             </div>
                             <div>
-                                <x-label for="gender" value="{{ __('Gender') }}" /> <!-- Add your select input for gender here --> <select name="gender" id="gender" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                                <x-label for="gender" value="{{ __('Gender') }}" /> <!-- Add your select input for gender here -->
+                                <select name="gender" id="gender" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
                                     <option value="">Select a gender</option>
-                                    <option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>Male</option>
-                                    <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>Female</option>
-                                    <option value="other" {{ old('gender') === 'other' ? 'selected' : '' }}>Other</option>
+                                    <option value="Male" {{ old('gender') === 'Male' ? 'selected' : '' }}>Male</option>
+                                    <option value="Female" {{ old('gender') === 'Female' ? 'selected' : '' }}>Female</option>
+                                    <option value="Other" {{ old('gender') === 'Other' ? 'selected' : '' }}>Other</option>
                                 </select>
                             </div>
                             <div>
@@ -66,7 +54,7 @@
                             <div>
                                 <x-label for="religion" value="{{ __('Religion') }}" />
                                 <!-- Add your select input for religion with sects here -->
-                                <select name="religion" id="religion" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                                <select name="religion" id="religion" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
                                     <option value="">Select a religion</option>
                                     <option value="islam" {{ old('religion') === 'islam' ? 'selected' : '' }}>Islam</option>
                                     <option value="christianity" {{ old('religion') === 'christianity' ? 'selected' : '' }}>Christianity</option>
@@ -100,7 +88,7 @@
                             </div>
                             <div>
                                 <x-label for="house" value="{{ __('House') }}" /> <!-- Add your select input for house with color values here -->
-                                <select name="house" id="house" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                                <select name="house" id="house" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
                                     <option value="">Select a house</option>
                                     <option value="red" {{ old('house') === 'red' ? 'selected' : '' }} style="color: red;">Red House</option>
                                     <option value="blue" {{ old('house') === 'blue' ? 'selected' : '' }} style="color: blue;">Blue House</option>
@@ -125,25 +113,35 @@
                                 <x-input id="measure_date" class="block mt-1 w-full" type="date" name="measure_date" :value="old('measure_date')" required  />
                             </div>
                             <div>
-                                <x-label for="fees_discount" value="{{ __('Fees Discount') }}" />
-                                <select name="fees_discount" id="fees_discount" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                                <x-label for="fees_discount" value="{{ __('Fees Discount') }}" required />
+                                <select name="fees_discount" required id="fees_discount" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
                                     <option value="">Select an option</option>
-                                    <option value="1" {{ old('fees_discount') === '1' ? 'selected' : '' }}>Yes</option>
-                                    <option value="0" {{ old('fees_discount') === '0' ? 'selected' : '' }}>No</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+
+                            <div>
+                                <x-label for="is_migrated" value="{{ __('Student Is Migrated From Another Institute') }}" />
+                                <select name="is_migrated" id="is_migrated" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                                    <option value="">Select an option</option>
+                                    <option value="1" {{ old('is_migrated') === '1' ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ old('is_migrated') === '0' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+
                             <div>
                                 <x-label for="medical_history" value="{{ __('Medical History') }}" /> <textarea name="medical_history" id="medical_history" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
                             </div>
                             <div>
                                 <x-label for="student_pic_1" value="{{ __('Student Picture') }}" />
-                                <x-input id="student_pic_1" class="block mt-1 w-full" type="file" name="student_pic" />
+                                <x-input id="student_pic_1" class="block mt-1 w-full" type="file" name="student_pic_1" />
                             </div>
                         </div>
                         <div class="flex items-center justify-end mt-4">
-                            <x-button class="ml-4" id="submit-btn" onclick="return confirm('Are you sure you want to generate challan?')"> {{ __('Add Student & Next') }} </x-button>
+                            <x-button class="ml-4" id="submit-btn" onclick="return confirm('Are you sure you want to create new admission for student?')"> {{ __('Add Student & Next') }} </x-button>
                         </div>
                     </form>
                 </div>

@@ -17,7 +17,7 @@
                             <div></div>
                             <!-- Empty column for spacing -->
                             <div class="flex items-center justify-center">
-                                <img src="{{ Storage::url('logo.png') }}" alt="Logo" class="h-16 mx-auto">
+                                <img src="{{ Storage::url('logo.png') }}" alt="Logo" class="max-h-32 mx-auto">
                             </div>
                             <div class="text-right mx-auto">
                                 @php $test_report_data = "http://127.0.0.1:8000/testReport/" . $student->id; @endphp
@@ -25,10 +25,10 @@
                             </div>
                         </div>
                         {{--                <img src="{{ Storage::url('logo.png') }}" alt="Logo Government" class="h-16 mx-auto">--}}
-                        <h3 class="text-lg text-center font-extrabold">
-                            Azad Jammu & Kashmir Group of Colleges
-                        </h3>
-                        <h1 class="text-lg text-center font-extrabold">Student Information</h1>
+{{--                        <h3 class="text-lg text-center font-extrabold">--}}
+{{--                            Azad Jammu & Kashmir Group of Colleges--}}
+{{--                        </h3>--}}
+                        <h1 class="text-xs text-center font-extrabold mt-2">Student Information</h1>
 
 {{--                        @if($testReport->phase_id == 2 && $testReport->noc_issued == 1 && $testReport->status == "Approved")--}}
 {{--                            <h2 class="text-lg text-center font-extrabold">--}}
