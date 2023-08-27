@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('challans', function (Blueprint $table) {
             $table->id()->startingValue(100000);
             $table->foreignId('student_id')->nullable()->constrained();
+            $table->date('payment_date')->nullable();
+            $table->decimal('payment_amount',14,2)->nullable();
+            $table->string('payment_scanned_path')->nullable();
             $table->enum('status',['Paid','UnPaid','Canceled'])->default('UnPaid');
             $table->timestamps();
         });

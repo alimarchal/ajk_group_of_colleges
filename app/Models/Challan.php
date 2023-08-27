@@ -11,7 +11,7 @@ class Challan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['student_id', 'status'];
+    protected $fillable = ['student_id', 'status', 'payment_date', 'payment_amount', 'payment_scanned_path'];
 
     public function payments(): HasMany
     {
@@ -21,5 +21,10 @@ class Challan extends Model
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
+    }
+
+    public function instituteClass(): BelongsTo
+    {
+        return $this->belongsTo(InstituteClass::class);
     }
 }

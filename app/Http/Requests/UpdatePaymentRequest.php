@@ -11,7 +11,7 @@ class UpdatePaymentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdatePaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'payment_date' => 'required',
+            'payment_amount' => 'required',
+            'status' => 'required',
+            'challan_scanned_copy' => 'required',
         ];
     }
 }

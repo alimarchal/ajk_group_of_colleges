@@ -71,6 +71,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/fee-information', [FeeTypeController::class, 'feeInformationIndex'])->name('fee-information.feeInformationIndex');
     Route::resource('feeType', FeeTypeController::class);
     Route::get('payment/{challan}', [PaymentController::class, 'show']);
+    Route::get('payment/{challan}/edit', [PaymentController::class, 'edit']);
+    Route::put('payment/{challan}', [PaymentController::class, 'update']);
     Route::resource('payment', PaymentController::class);
 
 

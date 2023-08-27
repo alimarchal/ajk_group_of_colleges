@@ -13,11 +13,6 @@
 
         <div class="flex justify-center items-center float-right">
 
-            <a href="{{ route('payment.create') }}"
-               class="flex items-center px-4 py-1.5 text-gray-600 bg-white border rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-200 transform dark:text-gray-200 dark:border-gray-200  dark:hover:bg-gray-700 ml-2">
-                Generate New Challan
-            </a>
-
             <a href="javascript:;" id="toggle"
                class="flex items-center px-4 py-2 text-gray-600 bg-white border rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-200 transform dark:text-gray-200 dark:border-gray-200  dark:hover:bg-gray-700 ml-2"
                title="Members List">
@@ -35,15 +30,42 @@
         <div class="rounded-xl p-4 bg-white shadow-lg">
 
 
-            <form method="GET" action="{{ route('feeType.index') }}">
-                <livewire:class-section/>
+            <form method="GET" action="{{ route('payment.index') }}">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
 
+
+                    <div>
+                        <div>
+                            <label for="challan_no">Challan No</label>
+                            <input type="number" id="challan_no" name="filter[id]" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full" value="{{ request('filter.id') }}">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <label for="student_id">Student ID</label>
+                            <input type="number" id="student_id" name="filter[student.id]" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full" value="{{ request('filter.student_id') }}">
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label for="status">Status</label>
+                        <select name="filter[status]" id="status" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                            <option value="">Select a challan status</option>
+                            <option value="Paid">Paid</option>
+                            <option value="UnPaid">Un-Paid</option>
+                            <option value="Canceled">Canceled</option>
+                        </select>
+                    </div>
+
+
+                </div>
                 <div class="mt-4">
                     <x-button class="bg-indigo-500 text-white">
                         {{ __('Apply Filters') }}
                     </x-button>
                 </div>
-
             </form>
 
         </div>
@@ -76,6 +98,11 @@
 
                             <th scope="col" class="px-1 py-2 border border-black  text-center">
                                 Fine
+                            </th>
+
+
+                            <th scope="col" class="px-1 py-2 border border-black  text-center">
+                                Paid Amount
                             </th>
 
                             <th scope="col" class="px-1 py-2 border border-black  text-center">
@@ -122,6 +149,11 @@
 
 
                                 <td class="border px-0.5 py-2  border-black font-medium text-black text-center dark:text-white print:hidden">
+                                    {{ number_format($ft->payment_amount,2) }}
+                                </td>
+
+
+                                <td class="border px-0.5 py-2  border-black font-medium text-black text-center dark:text-white print:hidden">
                                     @if($ft->payment_date)
                                         {{ \Carbon\Carbon::parse($ft->payment_date)->format('d-M-Y') }}
                                     @else
@@ -130,8 +162,8 @@
                                 </td>
 
                                 <td class="border px-0.5 py-2  border-black font-medium text-black text-center dark:text-white print:hidden">
-                                    @if(!empty($ft->challan_path))
-                                        <a href="{{ Storage::url($ft->challan_path) }}">
+                                    @if(!empty($ft->payment_scanned_path))
+                                        <a href="{{ Storage::url($ft->payment_scanned_path) }}" target="_blank" class="underline text-blue-500">
                                             View
                                         </a>
                                     @else
@@ -148,11 +180,11 @@
 
                                 <td class="border px-0.5 py-2  border-black font-medium text-black text-center dark:text-white print:hidden">
 
-                                    <a href="{{ route('payment.show', $ft->id) }}">
+                                    <a href="{{ route('payment.show', $ft->id) }}" target="_blank">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-center mx-auto">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
                                         </svg>
+
                                     </a>
                                 </td>
                             </tr>
@@ -161,6 +193,9 @@
 
                         </tbody>
                     </table>
+
+
+                    {{ $challans->links() }}
 
 
                 </div>

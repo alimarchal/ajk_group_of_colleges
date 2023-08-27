@@ -33,7 +33,7 @@
                                         &nbsp;
                                     </div>
                                     <div class="mt-1 text-base font-extrabold text-black">
-                                        View All Challans / Add New
+                                        Collect Fee / Search Challans
                                     </div>
                                 </div>
                                 <div class="col-span-1 flex items-center justify-end">

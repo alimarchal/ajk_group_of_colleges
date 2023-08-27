@@ -9,6 +9,8 @@ use App\Models\FeeType;
 use App\Models\Payment;
 use Auth;
 use Illuminate\Support\Facades\Validator;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PaymentController extends Controller
 {
@@ -17,7 +19,32 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $challans = Challan::all();
+
+
+        $challans = QueryBuilder::for(Challan::class)
+            ->allowedFilters([
+                AllowedFilter::exact('id'),
+                AllowedFilter::exact('status'),
+                AllowedFilter::exact('student.id'),
+//                AllowedFilter::exact('section.id'),
+//                AllowedFilter::exact('feeCategory.id'),
+//                AllowedFilter::exact('is_recurring'),
+//                AllowedFilter::exact('frequency'),
+//                AllowedFilter::partial('description'),
+            ])
+//            ->allowedSorts([
+//                'firstname',
+//                'lastname',
+//                'dob',
+//                'admission_date',
+//                'status',
+//                // Add more sortable fields as needed
+//            ])
+//            ->defaultSort('firstname')
+            ->with('payments', 'student', 'instituteClass')
+//            ->with('feeCategory', 'instituteClass', 'section')
+            ->paginate(10)->withQueryString();
+
         return view('payments.index', compact('challans'));
     }
 
@@ -57,8 +84,7 @@ class PaymentController extends Controller
 
         } elseif ($request->discount_type == "Percentage") {
 
-            if ($request->discounted_number <= 100)
-            {
+            if ($request->discounted_number <= 100) {
                 $fee_type = FeeType::find($request->fee_type_id);
                 $request->merge(['challan_id' => $challan->id]);
                 $request->merge(['user_id' => $user->id]);
@@ -112,17 +138,40 @@ class PaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Payment $payment)
+    public function edit(Challan $challan)
     {
-        //
+        return view('payments.edit', compact('challan'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePaymentRequest $request, Payment $payment)
+    public function update(UpdatePaymentRequest $request, Challan $challan)
     {
-        //
+        if ($request->hasFile('challan_scanned_copy')) {
+            $payment_scanned_path = $request->file('challan_scanned_copy')->store('payment_scanned_path', 'public');
+            $request->merge(['payment_scanned_path' => $payment_scanned_path]);
+        }
+
+        $challan->update([
+            'payment_date' => $request->payment_date,
+            'payment_amount' => $request->payment_amount,
+            'payment_scanned_path' => $request->payment_scanned_path,
+            'status' => $request->status,
+        ]);
+
+        $user = Auth::user();
+        foreach ($challan->payments as $payment) {
+            $payment->challan_uploaded_id = $user->id;
+            $payment->payment_date = $request->payment_date;
+            $payment->bank_id = 1;
+            $payment->challan_path = $payment_scanned_path;
+            $payment->status = $request->status;
+            $payment->save();
+        }
+
+        session()->flash('success', 'Challan updated successfully.');
+        return to_route('payment.index', ['filter[id]' => $challan->id]);
     }
 
     /**
