@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('institute_sessions', function (Blueprint $table) {
             $table->id();
+            $table->date('session_start_year')->nullable();
+            $table->date('session_end_year')->nullable();
+            $table->string('session_year')->nullable();
             $table->timestamps();
         });
     }

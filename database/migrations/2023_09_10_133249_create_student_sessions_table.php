@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('challans', function (Blueprint $table) {
-            $table->id()->startingValue(100000);
+        Schema::create('student_sessions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('student_id')->nullable()->constrained();
             $table->foreignId('institute_session_id')->nullable()->constrained();
-            $table->date('payment_date')->nullable();
-            $table->decimal('payment_amount',14,2)->nullable();
-            $table->string('payment_scanned_path')->nullable();
-            $table->enum('status',['Paid','UnPaid','Canceled'])->default('UnPaid');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('challans');
+        Schema::dropIfExists('student_sessions');
     }
 };

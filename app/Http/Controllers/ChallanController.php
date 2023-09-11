@@ -63,6 +63,7 @@ class ChallanController extends Controller
 
             $fee_cart = FeeTypeCart::create(array_merge($request->all(), $feeTypeAttributes));
             session()->flash('success', 'Fee type generated successfully.');
+
             return to_route('student.generate-challan', $student->id);
         }
     }
@@ -73,7 +74,6 @@ class ChallanController extends Controller
 //
 //        $lowestIssueDate = Challan::with('payments')->min('issue_date');
 //        $highestDueDate = Challan::with('payments')->max('due_date');
-
         return view('fee-challans.index', compact('student'));
     }
 
@@ -88,7 +88,10 @@ class ChallanController extends Controller
     public function generateFinalChallan(Student $student)
     {
         $user = Auth::user();
-        $challan = Challan::create(['student_id' => $student->id]);
+        $challan = Challan::create([
+            'student_id' => $student->id,
+            'institute_session_id' => $student->institute_session_id
+        ]);
         $fee_type_list = FeeTypeCart::where('student_id', $student->id)->get();
         foreach ($fee_type_list as $fl) {
             $payment = Payment::create([
@@ -97,6 +100,7 @@ class ChallanController extends Controller
                 'student_id' => $fl->student_id,
                 'fee_type_id' => $fl->fee_type_id,
                 'institute_class_id' => $fl->institute_class_id,
+                'institute_session_id' => $student->institute_session_id,
                 'section_id' => $fl->section_id,
                 'issue_date' => $fl->issue_date,
                 'due_date' => $fl->due_date,
@@ -113,7 +117,7 @@ class ChallanController extends Controller
         }
 
         session()->flash('success', 'Challan generated successfully.');
-        return to_route('student.generate-challan', $student->id);
+        return to_route('student.fee-challans', $student->id);
     }
 
     /**

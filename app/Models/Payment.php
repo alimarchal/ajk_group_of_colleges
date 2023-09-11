@@ -16,6 +16,7 @@ class Payment extends Model
         'student_id',
         'fee_type_id',
         'institute_class_id',
+        'institute_session_id',
         'section_id',
         'issue_date',
         'due_date',
@@ -62,4 +63,5 @@ class Payment extends Model
     {
         return $this->belongsTo(Challan::class);
     }
+
 }

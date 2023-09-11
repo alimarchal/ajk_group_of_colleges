@@ -42,6 +42,7 @@ class PaymentController extends Controller
 //            ])
 //            ->defaultSort('firstname')
             ->with('payments', 'student', 'instituteClass')
+            ->orderByDesc('created_at')
 //            ->with('feeCategory', 'instituteClass', 'section')
             ->paginate(10)->withQueryString();
 
@@ -131,7 +132,6 @@ class PaymentController extends Controller
      */
     public function show(Challan $challan)
     {
-
         return view('payments.show', compact('challan'));
     }
 

@@ -17,7 +17,7 @@
                     @if(!empty($student->emergencyContact))
 
 
-                        <form method="POST" action="{{ route('student.guardians.alerts.update', $student->emergencyContact->id) }}">
+                        <form method="POST" action="{{ route('student.guardians.alerts.update', $student->id) }}">
                             @csrf
                             @method('PUT')
                             <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="flex items-center justify-end mt-4">
-                                <x-button class="ml-4" id="submit-btn" onclick="return confirm('Are you sure you want to update guardian alert contacts?')">{{ __('Update Guardian Alert Contacts') }}</x-button>
+                                <x-button class="ml-4" id="submit-btn">{{ __('Update Guardian Alert Contacts') }}</x-button>
                             </div>
                         </form>
 

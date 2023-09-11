@@ -14,7 +14,7 @@
 
 
                     @if(!empty($student->guardian))
-                        <form method="POST" action="{{ route('guardian.update', $student->guardian->id) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('guardian.update', $student->id) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
@@ -31,17 +31,9 @@
                                     <x-label for="father_occupation" value="{{ __('Father Occupation') }}" />
                                     <x-input id="father_occupation" class="block mt-1 w-full" type="text" name="father_occupation" :value="old('father_occupation', $student->guardian->father_occupation)" />
                                 </div>
-                                <div>
-                                    <x-label for="father_pic" value="{{ __('Father Picture') }}" />
-                                    <x-input id="father_pic" class="block mt-1 w-full" type="file" name="father_pic_1" />
-                                    @if($student->guardian->father_pic)
-                                        <div class="mt-2">
-                                            <a href="{{ Storage::url($student->guardian->father_pic) }}" class="text-blue-500 hover:underline" target="_blank">
-                                                Existing Picture
-                                            </a>
-                                        </div>
-                                    @endif
-                                </div>
+
+                                <div></div>
+
                                 <!-- Mother Information -->
                                 <div>
                                     <x-label for="mother_name" value="{{ __('Mother Name') }}" />
@@ -55,17 +47,9 @@
                                     <x-label for="mother_occupation" value="{{ __('Mother Occupation') }}" />
                                     <x-input id="mother_occupation" class="block mt-1 w-full" type="text" name="mother_occupation" :value="old('mother_occupation', $student->guardian->mother_occupation)" />
                                 </div>
-                                <div>
-                                    <x-label for="mother_pic" value="{{ __('Mother Picture') }}" />
-                                    <x-input id="mother_pic" class="block mt-1 w-full" type="file" name="mother_pic_1" />
-                                    @if($student->guardian->mother_pic)
-                                        <div class="mt-2">
-                                            <a href="{{ Storage::url($student->guardian->mother_pic) }}" class="text-blue-500 hover:underline" target="_blank">
-                                                Existing Picture
-                                            </a>
-                                        </div>
-                                    @endif
-                                </div>
+
+                                <div></div>
+
                                 <!-- Guardian Information -->
                                 <div>
                                     <x-label for="guardian_is" value="{{ __('Guardian Relationship') }}" />
@@ -84,6 +68,7 @@
                                     <x-label for="guardian_relation" value="{{ __('Guardian Relation') }}" />
                                     <x-input id="guardian_relation" class="block mt-1 w-full" type="text" name="guardian_relation" :value="old('guardian_relation', $student->guardian->guardian_relation)" />
                                 </div>
+                                <div></div>
                                 <div>
                                     <x-label for="guardian_phone" value="{{ __('Guardian Phone') }}" />
                                     <x-input id="guardian_phone" class="block mt-1 w-full" type="text" name="guardian_phone" :value="old('guardian_phone', $student->guardian->guardian_phone)" />
@@ -96,20 +81,39 @@
                                     <x-label for="guardian_email" value="{{ __('Guardian Email') }}" />
                                     <x-input id="guardian_email" class="block mt-1 w-full" type="email" name="guardian_email" :value="old('guardian_email', $student->guardian->guardian_email)" />
                                 </div>
-                                <div>
-                                    <x-label for="guardian_pic" value="{{ __('Guardian Picture') }}" />
-                                    <x-input id="guardian_pic" class="block mt-1 w-full" type="file" name="guardian_pic_1" />
-                                    @if($student->guardian->guardian_pic)
-                                        <div class="mt-2">
-                                            <a href="{{ Storage::url($student->guardian->guardian_pic) }}" class="text-blue-500 hover:underline"  target="_blank">
-                                                Existing Picture
-                                            </a>
-                                        </div>
-                                    @endif
-                                </div>
+                                <div></div>
                                 <div>
                                     <x-label for="guardian_address" value="{{ __('Guardian Address') }}" />
                                     <textarea name="guardian_address" id="guardian_address" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ old('guardian_address', $student->guardian->guardian_address) }}</textarea>
+                                </div>
+
+                                <div>
+                                    @if($student->guardian->guardian_pic)
+                                        <div class="mt-2">
+                                            <img src="{{ Storage::url($student->guardian->guardian_pic) }}" class="text-blue-500 hover:underline"   style="width: 150px; height: 150px; border: 1px solid #000;"  target="_blank" />
+                                        </div>
+                                    @endif
+                                    <x-label for="guardian_pic" value="{{ __('Guardian Picture') }}" />
+                                    <x-input id="guardian_pic" class="block mt-1 w-full" type="file" name="guardian_pic_1" />
+                                </div>
+
+                                <div>
+                                    @if($student->guardian->father_pic)
+                                        <div class="mt-2">
+                                            <img src="{{ Storage::url($student->guardian->father_pic) }}" class="text-blue-500 hover:underline" style="width: 150px; height: 150px; border: 1px solid #000;"  target="_blank" />
+                                        </div>
+                                    @endif
+                                    <x-label for="father_pic" value="{{ __('Father Picture') }}" />
+                                    <x-input id="father_pic" class="block mt-1 w-full" type="file" name="father_pic_1" />
+                                </div>
+                                <div>
+                                    @if($student->guardian->mother_pic)
+                                        <div class="mt-2">
+                                            <img src="{{ Storage::url($student->guardian->mother_pic) }}" class="text-blue-500 hover:underline" style="width: 150px; height: 150px; border: 1px solid #000;"  target="_blank" />
+                                        </div>
+                                    @endif
+                                    <x-label for="mother_pic" value="{{ __('Mother Picture') }}" />
+                                    <x-input id="mother_pic" class="block mt-1 w-full" type="file" name="mother_pic_1" />
                                 </div>
                             </div>
                             <div class="flex items-center justify-end mt-4">

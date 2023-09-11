@@ -35,6 +35,7 @@ return new class extends Migration {
             $table->integer('fees_discount')->default(0);
             $table->string('medical_history')->nullable();
             $table->boolean('is_migrated')->default(0);
+            $table->foreignId('institute_session_id')->nullable()->constrained();
             $table->string('student_pic')->nullable();
 //            $table->enum('status', ['In-Process', 'Approved', 'Rusticated','Leaved'])->default('In-Process');
             $table->timestamps();

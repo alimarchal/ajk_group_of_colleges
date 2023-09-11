@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class InstituteSession extends Model
+class StudentSession extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'session_start_year',
-        'session_end_year',
-        'session_year',
+        'user_id',
+        'student_id',
+        'institute_session_id',
     ];
 }

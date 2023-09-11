@@ -5,12 +5,12 @@
     </x-slot>
     <div class="py-6">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl">
 
 
                 <x-status-message class="mb-4"/>
                 <x-student-tabs :student="$student"/>
-                <div class=" px-4 py-4 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent dark:border-gray-700">
+                <div class="bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent dark:border-gray-700">
                     <!-- resources/views/users/create.blade.php -->
                     <x-validation-errors class="mb-4 mt-4"/>
 
@@ -18,10 +18,10 @@
 
                     @if(!empty($student->challans))
                         <table class="w-full text-sm border-collapse rounded-lg	 border border-slate-400 text-left text-black dark:text-gray-400 mt-0.5">
-                            <thead class="text-black uppercase bg-gray-50 dark:bg-gray-700 ">
+                            <thead class="text-black uppercase text-white bg-gray-700 dark:bg-gray-700 ">
                             <tr>
 
-                                <th scope="col" class="border px-0.5 py-2  border-black font-medium text-black text-center dark:text-white">
+                                <th scope="col" class="border px-0.5 py-2  border-black font-medium  text-center dark:text-white">
                                     Challan No
                                 </th>
 
@@ -31,6 +31,10 @@
 
                                 <th scope="col" class="px-1 py-2 border border-black  text-center">
                                     Due Date
+                                </th>
+
+                                <th scope="col" class="px-1 py-2 border border-black  text-center print:hidden">
+                                    Amount
                                 </th>
 
                                 <th scope="col" class="px-1 py-2 border border-black  text-center print:hidden">
@@ -46,7 +50,7 @@
 
 
                             @foreach ($student->challans as $ft)
-                                <tr class="bg-white  border-b dark:bg-gray-800 dark:border-black text-left">
+                                <tr class="border-b dark:bg-gray-800 dark:border-black text-left @if($loop->iteration == 1) bg-yellow-200 @else bg-white @endif">
                                     <td class="border px-0.5 py-2  border-black font-medium text-black text-center dark:text-white">
                                         {{ $ft->id }}
                                     </td>
@@ -62,12 +66,16 @@
 
 
                                     <td class="border px-0.5 py-2  border-black font-medium text-black text-center dark:text-white">
+                                        {{ number_format($ft->payments->sum('amount'),2) }}
+                                    </td>
+
+                                    <td class="border px-0.5 py-2  border-black font-medium text-black text-center dark:text-white">
                                         {{ $ft->status }}
                                     </td>
 
                                     <td class="border px-0.5 py-2  border-black font-medium text-black text-center dark:text-white print:hidden">
 
-                                        <a href="{{ route('payment.show', $ft->id) }}" target="_blank">
+                                        <a href="{{ route('payment.show', $ft->id) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-center mx-auto">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>

@@ -16,37 +16,55 @@
                     <form method="POST" action="{{ route('student.update', $student->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+
+                        <livewire:student-class-section :student="$student"  />
+
+
+
+
+                        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+{{--                            <div>--}}
+{{--                                <x-label for="admission_no" value="{{ __('Admission No') }}"/>--}}
+{{--                                <x-input id="admission_no" class="block mt-1 w-full" type="text" name="admission_no" readonly :value="old('admission_no', $student->admission_no)"/>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <x-label for="roll_no" value="{{ __('Roll No') }}"/>--}}
+{{--                                <x-input id="roll_no" class="block mt-1 w-full" type="text" name="roll_no" :value="old('roll_no', $student->roll_no)" required/>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <x-label for="institute_class_id" value="{{ __('Institute Class') }}"/>--}}
+{{--                                <select name="institute_class_id" id="institute_class_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">--}}
+{{--                                    <option value="">Select a class</option>--}}
+{{--                                    @foreach (\App\Models\InstituteClass::all() as $ic)--}}
+{{--                                        <option value="{{ $ic->id }}" {{ old('institute_class_id', $student->institute_class_id) == $ic->id ? 'selected' : '' }}>--}}
+{{--                                            {{ $ic->name }} - {{ $ic->code }}--}}
+{{--                                        </option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <x-label for="section_id" value="{{ __('Section') }}"/>--}}
+{{--                                <select name="section_id" id="section_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">--}}
+{{--                                    <option value="">Select a section</option>--}}
+{{--                                    @foreach (\App\Models\Section::all() as $section)--}}
+{{--                                        <option value="{{ $section->id }}" {{ old('section_id', $student->section_id) == $section->id ? 'selected' : '' }}>--}}
+{{--                                            {{ $section->name }}--}}
+{{--                                        </option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+
+
                             <div>
-                                <x-label for="admission_no" value="{{ __('Admission No') }}"/>
-                                <x-input id="admission_no" class="block mt-1 w-full" type="text" name="admission_no" readonly :value="old('admission_no', $student->admission_no)"/>
-                            </div>
-                            <div>
-                                <x-label for="roll_no" value="{{ __('Roll No') }}"/>
-                                <x-input id="roll_no" class="block mt-1 w-full" type="text" name="roll_no" :value="old('roll_no', $student->roll_no)" required/>
-                            </div>
-                            <div>
-                                <x-label for="institute_class_id" value="{{ __('Institute Class') }}"/>
-                                <select name="institute_class_id" id="institute_class_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
-                                    <option value="">Select a class</option>
-                                    @foreach (\App\Models\InstituteClass::all() as $ic)
-                                        <option value="{{ $ic->id }}" {{ old('institute_class_id', $student->institute_class_id) == $ic->id ? 'selected' : '' }}>
-                                            {{ $ic->name }} - {{ $ic->code }}
-                                        </option>
+                                <x-label for="institute_session_id" value="{{ __('Session Year') }}" /> <!-- Add your select input for category_id here -->
+                                <select name="institute_session_id" id="institute_session_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                                    <option value="">Select a session</option>
+                                    @foreach (\App\Models\InstituteSession::where('status',1)->get() as $session)
+                                        <option value="{{ $session->id }}" @if(!empty($student->latestStudentSession)) {{ old('session_year', $student->latestStudentSession->institute_session_id) == $session->id ? 'selected' : '' }}  @endif>{{ $session->session_year }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div>
-                                <x-label for="section_id" value="{{ __('Section') }}"/>
-                                <select name="section_id" id="section_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
-                                    <option value="">Select a section</option>
-                                    @foreach (\App\Models\Section::all() as $section)
-                                        <option value="{{ $section->id }}" {{ old('section_id', $student->section_id) == $section->id ? 'selected' : '' }}>
-                                            {{ $section->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+
                             <div>
                                 <x-label for="category_id" value="{{ __('Category') }}"/>
                                 <select name="category_id" id="category_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
@@ -163,19 +181,6 @@
                             </div>
 
                             <div>
-                                <x-label for="student_pic" value="{{ __('Student Picture') }}"/>
-                                <x-input id="student_pic" class="block mt-1 w-full" type="file" name="student_pic_1"/>
-                                @if(!empty($student->student_pic))
-                                    <div class="mt-2">
-                                        @if ($student->student_pic)
-                                            <img src="{{ Storage::url($student->student_pic) }}" alt="Mother's Picture" class="w-24 mx-auto h-auto border-2 border-gray-400">
-                                        @else
-                                            N/A
-                                        @endif
-                                    </div>
-                                @endif
-                            </div>
-                            <div>
                                 <x-label for="is_migrated" value="{{ __('Student Is Migrated From Another Institute') }}" />
                                 <select name="is_migrated" id="is_migrated" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
                                     <option value="">Select an option</option>
@@ -193,6 +198,22 @@
                                     <option value="Leaved" {{ old('status_name', $student->latestStatus->name) == 'Leaved' ? 'selected' : '' }} >Leaved</option>
                                 </select>
                             </div>
+
+                            <div>
+                                {{--                                <x-label for="student_pic" value="{{ __('Student Picture') }}"/>--}}
+                                @if(!empty($student->student_pic))
+                                    <div class="mt-2">
+                                        @if ($student->student_pic)
+                                            <img src="{{ Storage::url($student->student_pic) }}" alt="Mother's Picture" style="width: 150px; height: 150px; border: 1px solid #000;">
+                                        @else
+                                            N/A
+                                        @endif
+                                    </div>
+                                @endif
+                                <x-input id="student_pic" class="block mt-1 w-full" type="file" name="student_pic_1"/>
+                            </div>
+
+
                         </div>
                         <div class="flex items-center justify-end mt-4">
                             <x-button class="ml-4" id="submit-btn"> {{ __('Update Student') }} </x-button>

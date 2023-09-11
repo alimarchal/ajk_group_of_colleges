@@ -38,6 +38,7 @@ class Student extends Model
         'fees_discount',
         'medical_history',
         'is_migrated',
+        'institute_session_id',
         'student_pic',
     ];
 
@@ -48,7 +49,7 @@ class Student extends Model
 
     public function challans(): HasMany
     {
-        return $this->hasMany(Challan::class);
+        return $this->hasMany(Challan::class)->orderByDesc('created_at');
     }
 
     public function scopeAgeBetween(Builder $query, $minAge, $maxAge)
@@ -106,5 +107,10 @@ class Student extends Model
     public function fee_type_carts(): HasMany
     {
         return $this->hasMany(FeeTypeCart::class);
+    }
+
+    public function latestStudentSession(): HasOne
+    {
+        return $this->hasOne(StudentSession::class)->latestOfMany();
     }
 }

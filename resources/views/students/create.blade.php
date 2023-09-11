@@ -25,8 +25,19 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
                             <div>
-                                <x-label for="category_id" value="{{ __('Category') }}" /> <!-- Add your select input for category_id here --> <select name="category_id" id="category_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
-                                    <option value="">Select a category</option> @foreach (\App\Models\Category::all() as $cat) <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option> @endforeach
+                                <x-label for="institute_session_id" value="{{ __('Session Year') }}" /> <!-- Add your select input for category_id here -->
+                                <select name="institute_session_id" id="institute_session_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                                    <option value="">Select a session</option>
+                                    @foreach (\App\Models\InstituteSession::where('status',1)->get() as $session)
+                                        <option value="{{ $session->id }}" {{ old('session_year') == $session->id ? 'selected' : '' }}>{{ $session->session_year }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <x-label for="category_id" value="{{ __('Category') }}" /> <!-- Add your select input for category_id here -->
+                                <select name="category_id" id="category_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                                    <option value="">Select a category</option>
+                                    @foreach (\App\Models\Category::all() as $cat) <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option> @endforeach
                                 </select>
                             </div>
                             <div>
@@ -147,7 +158,8 @@
                 </div>
             </div>
         </div>
-    </div> @push('modals') <script>
+    </div>
+    @push('modals') <script>
         // Add a script to format the CNIC input as 00000-0000000-0
         document.getElementById('cnic').addEventListener('input', function(e) {
             const cnicInput = e.target;
@@ -171,5 +183,6 @@
         //     // Disable the button to prevent multiple submissions
         //     this.disabled = true;
         // });
-    </script> @endpush
+    </script>
+    @endpush
 </x-app-layout>

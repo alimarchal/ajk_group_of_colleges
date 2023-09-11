@@ -34,8 +34,8 @@
             {{ __('Test Reports') }}
         </h2>
         <div class="flex justify-center items-center float-right">
-            <a href="{{ route('payment.index') }}"
-               class=" text-center px-4 py-2 text-white bg-red-500 border rounded-lg focus:outline-none hover:bg-green-900 transition-colors duration-200 transform dark:text-black dark:border-red-200 dark:hover:bg-green-900 dark:bg-gray-700 ml-2"
+            <a href="{{ url()->previous() }}"
+               class="text-center px-4 py-1.5 text-gray-600 bg-white border rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-200 transform dark:text-black dark:border-gray-200 dark:hover:bg-white dark:bg-gray-700"
                title="Back">
                 Back
             </a>
@@ -93,7 +93,7 @@
                             Session:
                         </td>
                         <td class="border px-1 border-black font-medium text-black dark:text-white">
-                            2023-2024
+                            {{ $challan->instituteSession->session_year }}
                         </td>
                     </tr>
 
@@ -243,7 +243,7 @@
                             Session:
                         </td>
                         <td class="border px-1 border-black font-medium text-black dark:text-white">
-                            2023-2024
+                            {{ $challan->instituteSession->session_year }}
                         </td>
                     </tr>
 
@@ -336,7 +336,7 @@
                     </tr>
                     <tr class="bg-white  border-b dark:bg-gray-800 dark:border-black text-left">
                         <td class="border text-xs text-center font-extrabold text-right px-1 border-black font-medium text-black dark:text-white" colspan="4">
-                            Parent Copy
+                            College/School Copy
                         </td>
                     </tr>
 
@@ -393,7 +393,7 @@
                             Session:
                         </td>
                         <td class="border px-1 border-black font-medium text-black dark:text-white">
-                            2023-2024
+                            {{ $challan->instituteSession->session_year }}
                         </td>
                     </tr>
 
@@ -486,7 +486,7 @@
                     </tr>
                     <tr class="bg-white  border-b dark:bg-gray-800 dark:border-black text-left">
                         <td class="border text-xs text-center font-extrabold text-right px-1 border-black font-medium text-black dark:text-white" colspan="4">
-                            Parent Copy
+                            Bank Copy
                         </td>
                     </tr>
 

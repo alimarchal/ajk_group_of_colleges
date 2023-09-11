@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Models\InstituteSession;
 use App\Models\Status;
 use App\Models\Student;
+use App\Models\StudentSession;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -91,14 +93,24 @@ class StudentController extends Controller
 
         // Create a new student record
         $student = Student::create($request->all());
-        $student->admission_no = 'AJKGC-' . $student->id;
-        $student->save();
+
 
         $status = Status::create([
             'user_id' => $user->id,
             'student_id' => $student->id,
             'name' => 'In-Process',
         ]);
+
+
+        $student_sessions = StudentSession::create([
+            'user_id' => $user->id,
+            'student_id' => $student->id,
+            'institute_session_id' => $request->institute_session_id,
+        ]);
+
+        $student->admission_no = 'AJKGC-' . $student->id;
+        $student->institute_session_id = $student_sessions->institute_session_id;
+        $student->save();
 
         session()->flash('success', 'Student record created successfully.');
         return to_route('student.guardians', $student->id);
@@ -158,12 +170,52 @@ class StudentController extends Controller
             $fatherPicPath = $request->file('student_pic_1')->store('student_pics', 'public');
             $request->merge(['student_pic' => $fatherPicPath]);
         }
+//
+//        $status = Status::create([
+//            'user_id' => $user->id,
+//            'student_id' => $student->id,
+//            'name' => $request->status_name,
+//        ]);
 
-        $status = Status::create([
-            'user_id' => $user->id,
-            'student_id' => $student->id,
-            'name' => $request->status_name,
-        ]);
+        $status_latest_of_many = $student->latestStatus;
+
+        if (empty($status_latest_of_many)) {
+            $status = Status::create([
+                'user_id' => $user->id,
+                'student_id' => $student->id,
+                'name' => $request->status_name,
+            ]);
+        } elseif ($status_latest_of_many->name != $request->status_name) {
+            $status = Status::create([
+                'user_id' => $user->id,
+                'student_id' => $student->id,
+                'name' => $request->status_name,
+            ]);
+        }
+
+
+
+
+        $institute_session_id = $student->institute_session_id;
+        if (empty($institute_session_id)) {
+            $student_sessions = StudentSession::create([
+                'user_id' => $user->id,
+                'student_id' => $student->id,
+                'institute_session_id' => $request->institute_session_id,
+            ]);
+            $request->merge(['institute_session_id' => $student_sessions->institute_session_id]);
+        } elseif ($institute_session_id != $request->institute_session_id) {
+            $student_sessions = StudentSession::create([
+                'user_id' => $user->id,
+                'student_id' => $student->id,
+                'institute_session_id' => $request->institute_session_id,
+            ]);
+            $request->merge(['institute_session_id' => $student_sessions->institute_session_id]);
+        }
+
+
+
+
 
         $student->update($request->all());
         // Create a new student record

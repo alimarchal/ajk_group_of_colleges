@@ -20,6 +20,8 @@ return new class extends Migration {
             $table->foreignId('fee_type_id')->nullable()->constrained();
             $table->foreignId('institute_class_id')->nullable()->constrained();
             $table->foreignId('section_id')->nullable()->constrained();
+            $table->foreignId('institute_session_id')->nullable()->constrained();
+
 
             $table->date('issue_date')->nullable();
             $table->date('due_date')->nullable();

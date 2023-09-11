@@ -18,36 +18,36 @@
 
 
                     @if($student->fee_type_carts->isNotEmpty())
-                        <div class="px-2 pt-4">
+                        <div class="">
                         <table class="w-full text-sm border-collapse rounded-lg	 border border-slate-400 text-left text-black dark:text-gray-400 mt-0.5">
-                            <thead class="text-black uppercase bg-gray-50 dark:bg-gray-700 ">
+                            <thead class="uppercase bg-gray-700 text-white dark:bg-gray-700">
                             <tr>
 
-                                <th scope="col" class="border px-0.5 py-1  border-black font-medium text-black text-center dark:text-white">
+                                <th scope="col" class="border py-2  border-black font-medium text-center dark:text-white">
                                     ID
                                 </th>
 
-                                <th scope="col" class="px-1 py-1 border border-black  text-center">
+                                <th scope="col" class="px-1 py-2 border border-black  text-center">
                                     Fee Type
                                 </th>
 
-                                <th scope="col" class="px-1 py-1 border border-black  text-center">
+                                <th scope="col" class="px-1 py-2 border border-black  text-center">
                                     Issue Date
                                 </th>
 
-                                <th scope="col" class="px-1 py-1 border border-black  text-center">
+                                <th scope="col" class="px-1 py-2 border border-black  text-center">
                                     Due Date
                                 </th>
 
-                                <th scope="col" class="px-1 py-1 border border-black  text-center">
+                                <th scope="col" class="px-1 py-2 border border-black  text-center">
                                     Amount
                                 </th>
 
-                                <th scope="col" class="px-1 py-1 border border-black  text-center">
+                                <th scope="col" class="px-1 py-2 border border-black  text-center">
                                     Fine
                                 </th>
 
-                                <th scope="col" class="px-1 py-1 border border-black  text-center">
+                                <th scope="col" class="px-1 py-2 border border-black  text-center">
                                     Discount
                                 </th>
 
@@ -152,7 +152,7 @@
                     @endif
 
 
-                    <hr class="mt-8">
+
                     <h1 class="text-xl text-center pt-6 font-bold">Generate Fee Type and Create Challans </h1>
                     <form method="POST" action="{{ route('student.generate-challan.post', $student->id) }}" class="px-6 mt-4">
                         @csrf
