@@ -11,7 +11,7 @@ class StoreInstituteClassRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,9 @@ class StoreInstituteClassRequest extends FormRequest
     {
         return [
             //
+            'name' => 'required',
+            'code' => 'required',
+            'active' => 'required',
         ];
     }
 }

@@ -13,7 +13,8 @@ class InstituteClassController extends Controller
      */
     public function index()
     {
-        //
+        $instituteClass = InstituteClass::all();
+        return view('institute-class.index', compact('instituteClass'));
     }
 
     /**
@@ -21,7 +22,7 @@ class InstituteClassController extends Controller
      */
     public function create()
     {
-        //
+        return view('institute-class.create');
     }
 
     /**
@@ -29,7 +30,11 @@ class InstituteClassController extends Controller
      */
     public function store(StoreInstituteClassRequest $request)
     {
-        //
+
+        $instituteClass = InstituteClass::create($request->all());
+
+        session()->flash('success', 'Class generated successfully.');
+        return to_route('instituteClass.index');
     }
 
     /**

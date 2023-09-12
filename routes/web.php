@@ -76,4 +76,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::resource('payment', PaymentController::class);
 
 
+    Route::get('/settings', [\App\Http\Controllers\SettingController::class, 'index'])->name('settings.index');
+    Route::resource('instituteClass', \App\Http\Controllers\InstituteClassController::class);
+
+
+
 });
