@@ -1,10 +1,10 @@
 <x-app-layout>
     @push('custom_headers')
-        <link rel="stylesheet" href="https://cms.ajkced.gok.pk/daterange/daterangepicker.min.css">
-        <script src="https://cms.ajkced.gok.pk/daterange/jquery-3.6.0.min.js"></script>
-        <script src="https://cms.ajkced.gok.pk/daterange/moment.min.js"></script>
-        <script src="https://cms.ajkced.gok.pk/daterange/knockout-3.5.1.js" defer></script>
-        <script src="https://cms.ajkced.gok.pk/daterange/daterangepicker.min.js" defer></script>
+        <link rel="stylesheet" href="{{ url('scripts/daterangepicker.min.css') }}">
+        <script src="{{ url('scripts/jquery-3.6.0.min.js') }}"></script>
+        <script src="{{ url('scripts/moment.min.js') }}"></script>
+        <script src="{{ url('scripts/knockout-3.5.1.js') }}" defer></script>
+        <script src="{{ url('scripts/daterangepicker.min.js') }}" defer></script>
     @endpush
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-block">
@@ -18,15 +18,15 @@
                 Create New
             </a>
 
-            <a href="javascript:;" id="toggle"
-               class="flex items-center px-4 py-2 text-gray-600 bg-white border rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-200 transform dark:text-gray-200 dark:border-gray-200  dark:hover:bg-gray-700 ml-2"
-               title="Members List">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
-                </svg>
-            </a>
+{{--            <a href="javascript:;" id="toggle"--}}
+{{--               class="flex items-center px-4 py-2 text-gray-600 bg-white border rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-200 transform dark:text-gray-200 dark:border-gray-200  dark:hover:bg-gray-700 ml-2"--}}
+{{--               title="Members List">--}}
+{{--                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"--}}
+{{--                     stroke="currentColor">--}}
+{{--                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"--}}
+{{--                          d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>--}}
+{{--                </svg>--}}
+{{--            </a>--}}
 
         </div>
 
@@ -69,7 +69,9 @@
                             <th scope="col" class="px-1 py-2 border border-black  text-center">
                                 Short Code
                             </th>
-
+                            <th scope="col" class="px-1 py-2 border border-black  text-center print:hidden">
+                                Status
+                            </th>
 
                             <th scope="col" class="px-1 py-2 border border-black  text-center print:hidden">
                                 Action
@@ -94,12 +96,22 @@
                                 </td>
 
 
+
                                 <td class="border px-0.5 py-2  border-black font-medium text-black text-center dark:text-white">
                                     @if($ft->active)
                                         Active
                                     @else
                                         In-Active
                                     @endif
+                                </td>
+
+
+                                <td class="px-1 py-3 border border-black text-center">
+                                    <a href="{{ route('instituteClass.edit', $ft->id) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"></path>
+                                        </svg>
+                                    </a>
                                 </td>
 
                             </tr>

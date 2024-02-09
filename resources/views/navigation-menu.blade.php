@@ -17,7 +17,7 @@
                     </x-nav-link>
 
                     <x-nav-link href="{{ route('student-information.index') }}" :active="request()->routeIs(['student-information.*','student.*'])">
-                        {{ __('Student Information') }}
+                        {{ __('Student') }}
                     </x-nav-link>
 
                     <x-nav-link href="{{ route('fee-information.feeInformationIndex') }}" :active="request()->routeIs(['fee-information.*','feeType.*','payment.*'])">
@@ -25,9 +25,20 @@
                     </x-nav-link>
 
 
-                    <x-nav-link href="{{ route('settings.index') }}" :active="request()->routeIs('settings.*')">
+                    <x-nav-link href="{{ route('staff-information') }}" :active="request()->routeIs(['staff-information','staff-information.teachers'])">
+                        {{ __('Staff') }}
+                    </x-nav-link>
+
+                    @role('admin|Super-Admin')
+                    <x-nav-link href="{{ route('settings.index') }}" :active="request()->routeIs(['settings.*','section.*','instituteClass.*'])">
                         {{ __('Settings') }}
                     </x-nav-link>
+
+                    <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
+                        {{ __('Users') }}
+                    </x-nav-link>
+                    @endrole
+
 
 
                     @role('Super-Admin')
@@ -36,14 +47,6 @@
                         {{ __('Reports') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Settings') }}
-                    </x-nav-link>
-
-
-                    <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
-                        {{ __('Users') }}
-                    </x-nav-link>
                     <x-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles.*')">
                         {{ __('Roles') }}
                     </x-nav-link>

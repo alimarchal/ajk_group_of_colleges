@@ -1,14 +1,22 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ChallanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeeTypeController;
 use App\Http\Controllers\GuardianController;
+use App\Http\Controllers\InstituteClassController;
 use App\Http\Controllers\InstituteMigrationController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SectionController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentGurdianAlertContactController;
 use App\Http\Controllers\StudentInformationController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,8 +39,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     //
-    Route::resource('roles', \App\Http\Controllers\RoleController::class);
-    Route::resource('permissions', \App\Http\Controllers\PermissionController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('permissions', PermissionController::class);
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
@@ -76,9 +84,22 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::resource('payment', PaymentController::class);
 
 
-    Route::get('/settings', [\App\Http\Controllers\SettingController::class, 'index'])->name('settings.index');
-    Route::resource('instituteClass', \App\Http\Controllers\InstituteClassController::class);
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::resource('instituteClass', InstituteClassController::class);
 
+    Route::get('staff-information', [StaffController::class, 'index'])->name('staff-information');
+    Route::get('staff-information/teachers', [StaffController::class, 'teachers'])->name('staff-information.teachers');
+    Route::get('/staff-information/teachers/{user}/edit', [StaffController::class, 'edit'])->name('staff-information.teachers.edit');
+    Route::put('/staff-information/teachers/{user}', [StaffController::class, 'update'])->name('staff-information.teachers.update');
+//    Route::get('/staff-information/teachers/create', [UserController::class, 'create'])->name('users.create');
+//    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+//
+
+
+    Route::get('student-attendance', [AttendanceController::class, 'index'])->name('student-attendance.index');
+
+    Route::resource('section', SectionController::class);
+    Route::resource('subject', SubjectController::class);
 
 
 });

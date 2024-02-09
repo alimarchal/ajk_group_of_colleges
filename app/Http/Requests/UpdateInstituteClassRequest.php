@@ -11,7 +11,7 @@ class UpdateInstituteClassRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateInstituteClassRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|unique:institute_classes,name,' . $this->instituteClass->id,
+            'code' => 'required|unique:institute_classes,code,' . $this->instituteClass->id,
+            'active' => 'required',
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreInstituteClassRequest;
 use App\Http\Requests\UpdateInstituteClassRequest;
 use App\Models\InstituteClass;
+use App\Models\Section;
 
 class InstituteClassController extends Controller
 {
@@ -30,9 +31,8 @@ class InstituteClassController extends Controller
      */
     public function store(StoreInstituteClassRequest $request)
     {
-
         $instituteClass = InstituteClass::create($request->all());
-
+        $sections = $instituteClass->sections;
         session()->flash('success', 'Class generated successfully.');
         return to_route('instituteClass.index');
     }
@@ -50,7 +50,7 @@ class InstituteClassController extends Controller
      */
     public function edit(InstituteClass $instituteClass)
     {
-        //
+        return view('institute-class.edit', compact('instituteClass'));
     }
 
     /**
@@ -58,7 +58,9 @@ class InstituteClassController extends Controller
      */
     public function update(UpdateInstituteClassRequest $request, InstituteClass $instituteClass)
     {
-        //
+        $instituteClass->update($request->all());
+        session()->flash('success', 'Class updated successfully.');
+        return to_route('instituteClass.index');
     }
 
     /**

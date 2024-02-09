@@ -16,8 +16,10 @@ return new class extends Migration
             $table->foreignId('branch_id')->nullable()->constrained();
             $table->foreignId('blood_group_id')->nullable()->constrained();
             $table->foreignId('category_id')->nullable()->constrained();
+            $table->foreignId('institute_class_id')->nullable()->constrained();
+            $table->foreignId('section_id')->nullable()->constrained();
             $table->string('name');
-            $table->string('username')->unique();
+            $table->string('username');
             $table->string('email')->unique();
             $table->string('gender')->nullable();
             $table->date('dob')->nullable();

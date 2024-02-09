@@ -1,4 +1,5 @@
 <div class="grid grid-cols-4 md:grid-cols-4 gap-4 mt-6">
+
     <div>
         <x-label for="admission_no" value="{{ __('Admission No') }}" />
         @if(!empty($student))

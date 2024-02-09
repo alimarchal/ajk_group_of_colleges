@@ -58,5 +58,6 @@ class PermissionsDemoSeeder extends Seeder
         Role::create(['name' => 'receptionist']);
         Role::create(['name' => 'student']);
 
+        //php artisan migrate:fresh --seed --seeder=PermissionsDemoSeeder
     }
 }

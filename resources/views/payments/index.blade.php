@@ -1,10 +1,10 @@
 <x-app-layout>
     @push('custom_headers')
-        <link rel="stylesheet" href="https://cms.ajkced.gok.pk/daterange/daterangepicker.min.css">
-        <script src="https://cms.ajkced.gok.pk/daterange/jquery-3.6.0.min.js"></script>
-        <script src="https://cms.ajkced.gok.pk/daterange/moment.min.js"></script>
-        <script src="https://cms.ajkced.gok.pk/daterange/knockout-3.5.1.js" defer></script>
-        <script src="https://cms.ajkced.gok.pk/daterange/daterangepicker.min.js" defer></script>
+        <link rel="stylesheet" href="{{ url('scripts/daterangepicker.min.css') }}">
+        <script src="{{ url('scripts/jquery-3.6.0.min.js') }}"></script>
+        <script src="{{ url('scripts/moment.min.js') }}"></script>
+        <script src="{{ url('scripts/knockout-3.5.1.js') }}" defer></script>
+        <script src="{{ url('scripts/daterangepicker.min.js') }}" defer></script>
     @endpush
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-block">

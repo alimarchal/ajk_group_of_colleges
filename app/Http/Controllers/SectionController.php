@@ -13,7 +13,8 @@ class SectionController extends Controller
      */
     public function index()
     {
-        //
+        $section = Section::all();
+        return view('sections.index', compact('section'));
     }
 
     /**
@@ -21,7 +22,7 @@ class SectionController extends Controller
      */
     public function create()
     {
-        //
+        return view('sections.create');
     }
 
     /**
@@ -29,7 +30,10 @@ class SectionController extends Controller
      */
     public function store(StoreSectionRequest $request)
     {
-        //
+        $section = Section::create($request->all());
+        $sections = $section->sections;
+        session()->flash('success', 'Class generated successfully.');
+        return to_route('instituteClass.index');
     }
 
     /**
@@ -45,7 +49,7 @@ class SectionController extends Controller
      */
     public function edit(Section $section)
     {
-        //
+        return view('sections.edit', compact('section'));
     }
 
     /**
@@ -53,7 +57,9 @@ class SectionController extends Controller
      */
     public function update(UpdateSectionRequest $request, Section $section)
     {
-        //
+        $section->update($request->all());
+        session()->flash('success', 'Section updated successfully.');
+        return to_route('section.index');
     }
 
     /**

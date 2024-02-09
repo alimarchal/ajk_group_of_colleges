@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-block"> {{ __('Student Admission') }} </h2>
-        <div class="flex justify-center items-center float-right"><a href="{{ route('feeType.index') }}" class="flex items-center px-4 py-2 text-white bg-red-900 border rounded-lg focus:outline-none hover:bg-green-950 transition-colors duration-200 transform dark:text-gray-200 dark:border-gray-200 dark:bg-gray-700 dark:hover:text-black  dark:hover:bg-white ml-2"> Back </a></div>
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-block"> {{ __('Create Class') }} </h2>
+        <div class="flex justify-center items-center float-right"><a href="{{ route('instituteClass.index') }}" class="flex items-center px-4 py-2 text-white bg-red-900 border rounded-lg focus:outline-none hover:bg-green-950 transition-colors duration-200 transform dark:text-gray-200 dark:border-gray-200 dark:bg-gray-700 dark:hover:text-black  dark:hover:bg-white ml-2"> Back </a></div>
     </x-slot>
     <div class="py-6">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
@@ -13,7 +13,7 @@
 
                     <form method="POST" action="{{ route('instituteClass.store') }}">
                         @csrf
-                        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-4">
+                        <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-4">
                             <div>
                                 <x-label for="name" value="{{ __('Class Name') }}"/>
                                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"/>

@@ -13,7 +13,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('role:Super-Admin')->only(['create', 'index', 'store', 'edit', 'update']);
+        $this->middleware('role:Super-Admin|admin')->only(['create', 'index', 'store', 'edit', 'update']);
     }
 
     public function index()
@@ -38,6 +38,8 @@ class UserController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'role' => 'required|exists:roles,id',
         ]);
+
+
 
         $user = User::create([
             'name' => $request->name,

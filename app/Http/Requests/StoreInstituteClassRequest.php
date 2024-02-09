@@ -23,8 +23,8 @@ class StoreInstituteClassRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required',
-            'code' => 'required',
+            'name' => 'required|unique:institute_classes',
+            'code' => 'required|unique:institute_classes', // Replace 'your_table_name_here' with your actual table name
             'active' => 'required',
         ];
     }
